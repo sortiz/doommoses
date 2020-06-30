@@ -1,7 +1,6 @@
-# Sacremoses
+# Doommoses - a Sacremoses fork
 
-[![Build Status](https://travis-ci.org/alvations/sacremoses.svg?branch=master)](https://travis-ci.org/alvations/sacremoses)
-[![Build status](https://ci.appveyor.com/api/projects/status/bwgmj4axw9pdk1oq?svg=true)](https://ci.appveyor.com/project/alvations/sacremoses)
+A Sacremoses fork without the unwanted contractions.
 
 # License
 
@@ -10,7 +9,7 @@ MIT License.
 # Install
 
 ```
-pip install -U sacremoses
+pip install -U 
 ```
 
 NOTE: Sacremoses only supports Python 3 now (`sacremoses>=0.0.41`). If you're using Python 2, the last possible version is `sacremoses==0.0.40`.
