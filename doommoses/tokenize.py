@@ -162,14 +162,14 @@ class MosesTokenizer(object):
     ESCAPE_LEFT_SQUARE_BRACKET = r"\[", r"&#91;"
     ESCAPE_RIGHT_SQUARE_BRACKET = r"]", r"&#93;"
 
-    EN_SPECIFIC_1 = r"([^{alpha}])[']([^{alpha}])".format(alpha=IsAlpha), r"\1 ' \2"
+    EN_SPECIFIC_1 = r"([^{alpha}])(['’])([^{alpha}])".format(alpha=IsAlpha), r"\1 \2 \3"
     EN_SPECIFIC_2 = (
-        r"([^{alpha}{isn}])[']([{alpha}])".format(alpha=IsAlpha, isn=IsN),
-        r"\1 ' \2",
+        r"([^{alpha}{isn}])(['’])([{alpha}])".format(alpha=IsAlpha, isn=IsN),
+        r"\1 \2 \3",
     )
-    EN_SPECIFIC_3 = r"([{alpha}])[']([^{alpha}])".format(alpha=IsAlpha), r"\1 ' \2"
-    EN_SPECIFIC_4 = r"([{alpha}])[']([{alpha}])".format(alpha=IsAlpha), r"\1 '\2"
-    EN_SPECIFIC_5 = r"([{isn}])[']([s])".format(isn=IsN), r"\1 '\2"
+    EN_SPECIFIC_3 = r"([{alpha}])(['’])([^{alpha}])".format(alpha=IsAlpha), r"\1 \2 \3"
+    EN_SPECIFIC_4 = r"([{alpha}])(['’])([{alpha}])".format(alpha=IsAlpha), r"\1 \2 \3"
+    EN_SPECIFIC_5 = r"([{isn}])(['’])([s])".format(isn=IsN), r"\1 \2 \3"
 
     ENGLISH_SPECIFIC_APOSTROPHE = [
         EN_SPECIFIC_1,
