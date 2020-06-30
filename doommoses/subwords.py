@@ -7,7 +7,7 @@ from collections import Counter, defaultdict
 from functools import reduce
 from itertools import tee
 
-from sacremoses.util import pairwise
+from doommoses.util import pairwise
 
 
 class SubwordTokenizer(object):

@@ -11,11 +11,11 @@ from tqdm import tqdm
 
 import click
 
-from sacremoses.tokenize import MosesTokenizer, MosesDetokenizer
-from sacremoses.truecase import MosesTruecaser, MosesDetruecaser
-from sacremoses.normalize import MosesPunctNormalizer
-from sacremoses.chinese import simplify, tradify
-from sacremoses.util import parallelize_preprocess
+from doommoses.tokenize import MosesTokenizer, MosesDetokenizer
+from doommoses.truecase import MosesTruecaser, MosesDetruecaser
+from doommoses.normalize import MosesPunctNormalizer
+from doommoses.chinese import simplify, tradify
+from doommoses.util import parallelize_preprocess
 
 # Hack to enable Python2.7 to use encoding.
 import sys

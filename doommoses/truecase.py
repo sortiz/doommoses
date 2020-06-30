@@ -9,9 +9,9 @@ from itertools import chain
 
 from six import text_type
 
-from sacremoses.corpus import Perluniprops
-from sacremoses.corpus import NonbreakingPrefixes
-from sacremoses.util import parallelize_preprocess, grouper
+from doommoses.corpus import Perluniprops
+from doommoses.corpus import NonbreakingPrefixes
+from doommoses.util import parallelize_preprocess, grouper
 
 # Hack to enable Python2.7 to use encoding.
 import sys
@@ -358,20 +358,20 @@ class MosesTruecaser(object):
                 else:
                     tokens.append(
                         potential_xml + " "
-                    )  # Token hack, unique to sacremoses.
+                    )  # Token hack, unique to doommoses.
                 line = line_next
 
             elif is_non_xml:
-                tokens.append(is_non_xml.group(1))  # Token hack, unique to sacremoses.
+                tokens.append(is_non_xml.group(1))  # Token hack, unique to doommoses.
                 line = is_non_xml.group(2)
             elif xml_cognates:
                 tokens.append(
                     xml_cognates.group(1)
-                )  # Token hack, unique to sacremoses.
+                )  # Token hack, unique to doommoses.
                 line = xml_cognates.group(2)
             else:
                 raise Exception("ERROR: huh? {}".format(line))
-            tokens[-1] = tokens[-1].strip()  # Token hack, unique to sacremoses.
+            tokens[-1] = tokens[-1].strip()  # Token hack, unique to doommoses.
         return tokens
 
     def _casing_to_model(self, casing):

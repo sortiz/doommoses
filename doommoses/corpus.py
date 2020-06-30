@@ -48,7 +48,7 @@ class Perluniprops:
         This module returns a list of characters from  the Perl Unicode Properties.
         They are very useful when porting Perl tokenizers to Python.
 
-            >>> from sacremoses.corpus import Perluniprops
+            >>> from doommoses.corpus import Perluniprops
             >>> pup = Perluniprops()
             >>> list(pup.chars('Open_Punctuation'))[:5] == [u'(', u'[', u'{', u'\u0f3a', u'\u0f3c']
             True
@@ -60,7 +60,7 @@ class Perluniprops:
         :return: a generator of characters given the specific unicode character category
         """
         relative_path = os.path.join("data", "perluniprops", category + ".txt")
-        binary_data = pkgutil.get_data("sacremoses", relative_path)
+        binary_data = pkgutil.get_data("doommoses", relative_path)
         for ch in binary_data.decode("utf-8"):
             yield ch
 
@@ -111,7 +111,7 @@ class NonbreakingPrefixes:
         This module returns a list of nonbreaking prefixes for the specified
         language(s).
 
-            >>> from sacremoses.corpus import NonbreakingPrefixes
+            >>> from doommoses.corpus import NonbreakingPrefixes
             >>> nbp = NonbreakingPrefixes()
             >>> list(nbp.words('en'))[:10] == [u'A', u'B', u'C', u'D', u'E', u'F', u'G', u'H', u'I', u'J']
             True
@@ -133,7 +133,7 @@ class NonbreakingPrefixes:
 
         for filename in filenames:
             relative_path = os.path.join("data", "nonbreaking_prefixes", filename)
-            binary_data = pkgutil.get_data("sacremoses", relative_path)
+            binary_data = pkgutil.get_data("doommoses", relative_path)
             for line in binary_data.decode("utf-8").splitlines():
                 line = line.strip()
                 if line and not line.startswith(ignore_lines_startswith):

@@ -5,9 +5,9 @@ import re
 
 from six import text_type
 
-from sacremoses.corpus import Perluniprops
-from sacremoses.corpus import NonbreakingPrefixes
-from sacremoses.util import is_cjk
+from doommoses.corpus import Perluniprops
+from doommoses.corpus import NonbreakingPrefixes
+from doommoses.util import is_cjk
 
 perluniprops = Perluniprops()
 nonbreaking_prefixes = NonbreakingPrefixes()
@@ -75,6 +75,9 @@ class MosesTokenizer(object):
     REPLACE_ELLIPSIS = r"\.\.\.", r" _ELLIPSIS_ "
     # Restore _ELLIPSIS_ with ...
     RESTORE_ELLIPSIS = r"_ELLIPSIS_", r"\.\.\."
+    
+    # Restore apostrophe    
+    RESTORE_APOS = r"_APOS_", r"\'"
 
     # Pad , with tailing space except if within numbers, e.g. 5,300
     COMMA_1 = r"([^{numbers}])[,]([^{numbers}])".format(numbers=IsN), r"\1 , \2"
@@ -122,27 +125,27 @@ class MosesTokenizer(object):
     APOSTROPHE = r"([^'])'", r"\1 ' "
 
     # Prepend space on contraction apostrophe.
-    CONTRACTION_1 = r"'([sSmMdD]) ", r" '\1 "
-    CONTRACTION_2 = r"'ll ", r" 'll "
-    CONTRACTION_3 = r"'re ", r" 're "
-    CONTRACTION_4 = r"'ve ", r" 've "
-    CONTRACTION_5 = r"n't ", r" n't "
-    CONTRACTION_6 = r"'LL ", r" 'LL "
-    CONTRACTION_7 = r"'RE ", r" 'RE "
-    CONTRACTION_8 = r"'VE ", r" 'VE "
-    CONTRACTION_9 = r"N'T ", r" N'T "
+    CONTRACTION_1 = r"'([sSmMdD]) ", r"_APOS_\1 "
+    CONTRACTION_2 = r"'ll ", r"_APOS_ll "
+    CONTRACTION_3 = r"'re ", r"_APOS_re "
+    CONTRACTION_4 = r"'ve ", r"_APOS_ve "
+    CONTRACTION_5 = r"n't ", r"n_APOS_t "
+    CONTRACTION_6 = r"'LL ", r"_APOS_LL "
+    CONTRACTION_7 = r"'RE ", r"_APOS_RE "
+    CONTRACTION_8 = r"'VE ", r"_APOS_VE "
+    CONTRACTION_9 = r"N'T ", r"N_APOS_T "
 
     # Informal Contractions.
-    CONTRACTION_10 = r" ([Cc])annot ", r" \1an not "
-    CONTRACTION_11 = r" ([Dd])'ye ", r" \1' ye "
-    CONTRACTION_12 = r" ([Gg])imme ", r" \1im me "
-    CONTRACTION_13 = r" ([Gg])onna ", r" \1on na "
-    CONTRACTION_14 = r" ([Gg])otta ", r" \1ot ta "
-    CONTRACTION_15 = r" ([Ll])emme ", r" \1em me "
-    CONTRACTION_16 = r" ([Mm])ore'n ", r" \1ore 'n "
-    CONTRACTION_17 = r" '([Tt])is ", r" '\1 is "
-    CONTRACTION_18 = r" '([Tt])was ", r" '\1 was "
-    CONTRACTION_19 = r" ([Ww])anna ", r" \1an na "
+    CONTRACTION_10 = r" ([Cc])annot ", r" \1annot "
+    CONTRACTION_11 = r" ([Dd])'ye ", r" \1_APOS_ye "
+    CONTRACTION_12 = r" ([Gg])imme ", r" \1imme "
+    CONTRACTION_13 = r" ([Gg])onna ", r" \1onna "
+    CONTRACTION_14 = r" ([Gg])otta ", r" \1otta "
+    CONTRACTION_15 = r" ([Ll])emme ", r" \1emme "
+    CONTRACTION_16 = r" ([Mm])ore'n ", r" \1ore_APOS_n "
+    CONTRACTION_17 = r" '([Tt])is ", r" _APOS_\1is "
+    CONTRACTION_18 = r" '([Tt])was ", r" _APOS_\1was "
+    CONTRACTION_19 = r" ([Ww])anna ", r" \1anna "
 
     # Clean out extra spaces
     CLEAN_EXTRA_SPACE_1 = r"  *", r" "
@@ -172,7 +175,7 @@ class MosesTokenizer(object):
         EN_SPECIFIC_1,
         EN_SPECIFIC_2,
         EN_SPECIFIC_3,
-        EN_SPECIFIC_4,
+        #EN_SPECIFIC_4,
         EN_SPECIFIC_5,
     ]
 
@@ -230,25 +233,25 @@ class MosesTokenizer(object):
         CONVERT_DOUBLE_TO_SINGLE_QUOTES,
         HANDLES_SINGLE_QUOTES,
         APOSTROPHE,
-        #CONTRACTION_1,
-        #CONTRACTION_2,
-        #CONTRACTION_3,
-        #CONTRACTION_4,
-        #CONTRACTION_5,
-        #CONTRACTION_6,
-        #CONTRACTION_7,
-        #CONTRACTION_8,
-        #CONTRACTION_9,
-        #CONTRACTION_10,
-        #CONTRACTION_11,
-        #CONTRACTION_12,
-        #CONTRACTION_13,
-        #CONTRACTION_14,
-        #CONTRACTION_15,
-        #CONTRACTION_16,
-        #CONTRACTION_17,
-        #CONTRACTION_18,
-        #CONTRACTION_19,
+        CONTRACTION_1,
+        CONTRACTION_2,
+        CONTRACTION_3,
+        CONTRACTION_4,
+        CONTRACTION_5,
+        CONTRACTION_6,
+        CONTRACTION_7,
+        CONTRACTION_8,
+        CONTRACTION_9,
+        CONTRACTION_10,
+        CONTRACTION_11,
+        CONTRACTION_12,
+        CONTRACTION_13,
+        CONTRACTION_14,
+        CONTRACTION_15,
+        CONTRACTION_16,
+        CONTRACTION_17,
+        CONTRACTION_18,
+        CONTRACTION_19,
     ]
 
     MOSES_PENN_REGEXES_2 = [
@@ -262,6 +265,7 @@ class MosesTokenizer(object):
         ESCAPE_RIGHT_ANGLE_BRACKET,
         ESCAPE_SINGLE_QUOTE,
         ESCAPE_DOUBLE_QUOTE,
+        RESTORE_APOS, 
     ]
 
     MOSES_ESCAPE_XML_REGEXES = [

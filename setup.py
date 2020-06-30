@@ -3,18 +3,18 @@ import setuptools
 
 console_scripts = """
 [console_scripts]
-sacremoses=sacremoses.cli:cli
+doommoses=doommoses.cli:cli
 """
 
 setup(
-  name = 'sacremoses',
-  packages = ['sacremoses'],
+  name = 'doommoses',
+  packages = ['doommoses'],
   version = '0.0.43',
   description = 'SacreMoses',
   long_description = 'MosesTokenizer in Python',
   author = '',
-  package_data={'sacremoses': ['data/perluniprops/*.txt', 'data/nonbreaking_prefixes/nonbreaking_prefix.*']},
-  url = 'https://github.com/alvations/sacremoses',
+  package_data={'doommoses': ['data/perluniprops/*.txt', 'data/nonbreaking_prefixes/nonbreaking_prefix.*']},
+  url = 'https://github.com/sortiz/doommoses',
   keywords = [],
   classifiers = [
     "Programming Language :: Python :: 3",
