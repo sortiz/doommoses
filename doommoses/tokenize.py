@@ -38,7 +38,7 @@ class MosesTokenizer(object):
     RIGHT_STRIP = r" $", r""  # Uses text.rstrip() instead.
 
     # Pad all "other" special characters not in IsAlnum.
-    PAD_NOT_ISALNUM = r"([^{}\s\.'\`\,\-])".format(IsAlnum), r" \1 "
+    PAD_NOT_ISALNUM = r"([^{}\s\.'’\`\,\-])".format(IsAlnum), r" \1 "
 
     # Splits all hyphens (regardless of circumstances), e.g.
     # 'foo-bar' -> 'foo @-@ bar'
@@ -78,6 +78,8 @@ class MosesTokenizer(object):
     
     # Restore apostrophe    
     RESTORE_APOS = r"_APOS_", r"\'"
+    
+    RESTORE_APOS_ALT = r"_APOS_ALT_", r"’"
 
     # Pad , with tailing space except if within numbers, e.g. 5,300
     COMMA_1 = r"([^{numbers}])[,]([^{numbers}])".format(numbers=IsN), r"\1 , \2"
@@ -119,10 +121,10 @@ class MosesTokenizer(object):
     # Converts double quotes to two single quotes and pad with spaces.
     CONVERT_DOUBLE_TO_SINGLE_QUOTES = r'"', " '' "
     # Handles single quote in possessives or close-single-quote.
-    HANDLES_SINGLE_QUOTES = r"([^'])' ", r"\1 ' "
+    HANDLES_SINGLE_QUOTES = r"([^'’])(['’]) ", r"\1 \2 "
 
     # Pad apostrophe in possessive or close-single-quote.
-    APOSTROPHE = r"([^'])'", r"\1 ' "
+    APOSTROPHE = r"([^'’])(['’])", r"\1 \2 "
 
     # Prepend space on contraction apostrophe.
     CONTRACTION_1 = r"'([sSmMdD]) ", r"_APOS_\1 "
@@ -146,6 +148,30 @@ class MosesTokenizer(object):
     CONTRACTION_17 = r" '([Tt])is ", r" _APOS_\1is "
     CONTRACTION_18 = r" '([Tt])was ", r" _APOS_\1was "
     CONTRACTION_19 = r" ([Ww])anna ", r" \1anna "
+
+    # Prepend space on contraction apostrophe.
+    CONTRACTIONALT_1 = r"’([sSmMdD]) ", r"_APOS_ALT_\1 "
+    CONTRACTIONALT_2 = r"’ll ", r"_APOS_ALT_ll "
+    CONTRACTIONALT_3 = r"’re ", r"_APOS_ALT_re "
+    CONTRACTIONALT_4 = r"’ve ", r"_APOS_ALT_ve "
+    CONTRACTIONALT_5 = r"n’t ", r"n_APOS_ALT_t "
+    CONTRACTIONALT_6 = r"’LL ", r"_APOS_ALT_LL "
+    CONTRACTIONALT_7 = r"’RE ", r"_APOS_ALT_RE "
+    CONTRACTIONALT_8 = r"’VE ", r"_APOS_ALT_VE "
+    CONTRACTIONALT_9 = r"N’T ", r"N_APOS__ALT_T "
+
+    # Informal Contractions.
+    CONTRACTIONALT_10 = r" ([Cc])annot ", r" \1annot "
+    CONTRACTIONALT_11 = r" ([Dd])’ye ", r" \1_APOS_ALT_ye "
+    CONTRACTIONALT_12 = r" ([Gg])imme ", r" \1imme "
+    CONTRACTIONALT_13 = r" ([Gg])onna ", r" \1onna "
+    CONTRACTIONALT_14 = r" ([Gg])otta ", r" \1otta "
+    CONTRACTIONALT_15 = r" ([Ll])emme ", r" \1emme "
+    CONTRACTIONALT_16 = r" ([Mm])ore’n ", r" \1ore_APOS_ALT_n "
+    CONTRACTIONALT_17 = r" ’([Tt])is ", r" _APOS_ALT_\1is "
+    CONTRACTIONALT_18 = r" ’([Tt])was ", r" _APOS_ALT_\1was "
+    CONTRACTIONALT_19 = r" ([Ww])anna ", r" \1anna "
+
 
     # Clean out extra spaces
     CLEAN_EXTRA_SPACE_1 = r"  *", r" "
@@ -191,7 +217,7 @@ class MosesTokenizer(object):
         FR_IT_SPECIFIC_4,
     ]
 
-    NON_SPECIFIC_APOSTROPHE = r"\'", " ' "
+    NON_SPECIFIC_APOSTROPHE = r"([\'’])", " \1 "
 
     TRAILING_DOT_APOSTROPHE = r"\.' ?$", " . ' "
 
@@ -252,6 +278,25 @@ class MosesTokenizer(object):
         CONTRACTION_17,
         CONTRACTION_18,
         CONTRACTION_19,
+        CONTRACTIONALT_1,
+        CONTRACTIONALT_2,
+        CONTRACTIONALT_3,
+        CONTRACTIONALT_4,
+        CONTRACTIONALT_5,
+        CONTRACTIONALT_6,
+        CONTRACTIONALT_7,
+        CONTRACTIONALT_8,
+        CONTRACTIONALT_9,
+        CONTRACTIONALT_10,
+        CONTRACTIONALT_11,
+        CONTRACTIONALT_12,
+        CONTRACTIONALT_13,
+        CONTRACTIONALT_14,
+        CONTRACTIONALT_15,
+        CONTRACTIONALT_16,
+        CONTRACTIONALT_17,
+        CONTRACTIONALT_18,
+        CONTRACTIONALT_19,
     ]
 
     MOSES_PENN_REGEXES_2 = [
@@ -265,7 +310,8 @@ class MosesTokenizer(object):
         ESCAPE_RIGHT_ANGLE_BRACKET,
         ESCAPE_SINGLE_QUOTE,
         ESCAPE_DOUBLE_QUOTE,
-        RESTORE_APOS, 
+        RESTORE_APOS,
+        RESTORE_APOS_ALT 
     ]
 
     MOSES_ESCAPE_XML_REGEXES = [
