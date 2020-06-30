@@ -12,14 +12,14 @@ MIT License.
 pip install -U 
 ```
 
-NOTE: Sacremoses only supports Python 3 now (`sacremoses>=0.0.41`). If you're using Python 2, the last possible version is `sacremoses==0.0.40`.
+NOTE: Doommoses only supports Python 3 now (`doommoses>=0.0.41`). If you're using Python 2, the last possible version is `doommoses==0.0.40`.
 
 # Usage (Python)
 
 ## Tokenizer and Detokenizer
 
 ```python
->>> from sacremoses import MosesTokenizer, MosesDetokenizer
+>>> from doommoses import MosesTokenizer, MosesDetokenizer
 >>> mt = MosesTokenizer(lang='en')
 >>> text = u'This, is a sentence with weird\xbb symbols\u2026 appearing everywhere\xbf'
 >>> expected_tokenized = u'This , is a sentence with weird \xbb symbols \u2026 appearing everywhere \xbf'
@@ -42,7 +42,7 @@ True
 ## Truecaser
 
 ```python
->>> from sacremoses import MosesTruecaser, MosesTokenizer
+>>> from doommoses import MosesTruecaser, MosesTokenizer
 
 # Train a new truecaser from a 'big.txt' file.
 >>> mtr = MosesTruecaser()
@@ -77,7 +77,7 @@ True
 ## Normalizer
 
 ```python
->>> from sacremoses import MosesPunctNormalizer
+>>> from doommoses import MosesPunctNormalizer
 >>> mpn = MosesPunctNormalizer()
 >>> mpn.normalize('THIS EBOOK IS OTHERWISE PROVIDED TO YOU "AS-IS."')
 'THIS EBOOK IS OTHERWISE PROVIDED TO YOU "AS-IS."'
@@ -94,10 +94,10 @@ are global options that should be set first before calling the commands:
  - quiet
 
 ```shell
-$ pip install -U sacremoses>=0.0.42
+$ pip install -U doommoses>=0.0.42
 
-$ sacremoses --help
-Usage: sacremoses [OPTIONS] COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]...
+$ doommoses --help
+Usage: doommoses [OPTIONS] COMMAND1 [ARGS]... [COMMAND2 [ARGS]...]...
 
 Options:
   -l, --language TEXT      Use language specific rules when tokenizing
@@ -128,7 +128,7 @@ Example to chain the following commands:
  - save the output to console to the `big.txt.norm.tok.true` file.
 
 ```shell
-cat big.txt | sacremoses -l en -j 4 \
+cat big.txt | doommoses -l en -j 4 \
     normalize -c tokenize -a truecase -a -m big.truemodel \
     > big.txt.norm.tok.true
 ```
@@ -136,8 +136,8 @@ cat big.txt | sacremoses -l en -j 4 \
 ## Tokenizer
 
 ```shell
-$ sacremoses tokenize --help
-Usage: sacremoses tokenize [OPTIONS]
+$ doommoses tokenize --help
+Usage: doommoses tokenize [OPTIONS]
 
 Options:
   -a, --aggressive-dash-splits   Triggers dash split rules.
@@ -150,33 +150,33 @@ Options:
   -h, --help                     Show this message and exit.
 
 
- $ sacremoses -l en -j 4 tokenize  < big.txt > big.txt.tok
+ $ doommoses -l en -j 4 tokenize  < big.txt > big.txt.tok
 100%|██████████████████████████████████| 128457/128457 [00:05<00:00, 24363.39it/s
 
  $ wget https://raw.githubusercontent.com/moses-smt/mosesdecoder/master/scripts/tokenizer/basic-protected-patterns
- $ sacremoses -l en -j 4 tokenize -p basic-protected-patterns < big.txt > big.txt.tok
+ $ doommoses -l en -j 4 tokenize -p basic-protected-patterns < big.txt > big.txt.tok
 100%|██████████████████████████████████| 128457/128457 [00:05<00:00, 22183.94it/s
 ```
 
 ## Detokenizer
 
 ```shell
-$ sacremoses detokenize --help
-Usage: sacremoses detokenize [OPTIONS]
+$ doommoses detokenize --help
+Usage: doommoses detokenize [OPTIONS]
 
 Options:
   -x, --xml-unescape  Unescape special characters for XML.
   -h, --help          Show this message and exit.
 
- $ sacremoses -l en -j 4 detokenize < big.txt.tok > big.txt.tok.detok
+ $ doommoses -l en -j 4 detokenize < big.txt.tok > big.txt.tok.detok
 100%|██████████████████████████████████| 128457/128457 [00:16<00:00, 7931.26it/s]
 ```
 
 ## Truecase
 
 ```shell
-$ sacremoses truecase --help
-Usage: sacremoses truecase [OPTIONS]
+$ doommoses truecase --help
+Usage: doommoses truecase [OPTIONS]
 
 Options:
   -m, --modelfile TEXT            Filename to save/load the modelfile.
@@ -186,15 +186,15 @@ Options:
                                   training.
   -h, --help                      Show this message and exit.
 
-$ sacremoses -j 4 truecase -m big.model < big.txt.tok > big.txt.tok.true
+$ doommoses -j 4 truecase -m big.model < big.txt.tok > big.txt.tok.true
 100%|██████████████████████████████████| 128457/128457 [00:09<00:00, 14257.27it/s]
 ```
 
 ## Detruecase
 
 ```shell
-$ sacremoses detruecase --help
-Usage: sacremoses detruecase [OPTIONS]
+$ doommoses detruecase --help
+Usage: doommoses detruecase [OPTIONS]
 
 Options:
   -j, --processes INTEGER  No. of processes.
@@ -202,15 +202,15 @@ Options:
   -e, --encoding TEXT      Specify encoding of file.
   -h, --help               Show this message and exit.
 
-$ sacremoses -j 4 detruecase  < big.txt.tok.true > big.txt.tok.true.detrue
+$ doommoses -j 4 detruecase  < big.txt.tok.true > big.txt.tok.true.detrue
 100%|█████████████████████████████████| 128457/128457 [00:04<00:00, 26945.16it/s]
 ```
 
 ## Normalize
 
 ```shell
-$ sacremoses normalize --help
-Usage: sacremoses normalize [OPTIONS]
+$ doommoses normalize --help
+Usage: doommoses normalize [OPTIONS]
 
 Options:
   -q, --normalize-quote-commas  Normalize quotations and commas.
@@ -220,6 +220,6 @@ Options:
   -c, --remove-control-chars    Remove control characters AFTER normalization.
   -h, --help                    Show this message and exit.
 
-$ sacremoses -j 4 normalize < big.txt > big.txt.norm
+$ doommoses -j 4 normalize < big.txt > big.txt.norm
 100%|██████████████████████████████████| 128457/128457 [00:09<00:00, 13096.23it/s]
 ```
