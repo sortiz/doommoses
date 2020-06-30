@@ -1,6 +1,6 @@
 # Doommoses - a Sacremoses fork
 
-A Sacremoses fork without the unwanted contractions.
+A Sacremoses fork without the unwanted contractions. Work in progress.
 
 # License
 
