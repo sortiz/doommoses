@@ -205,10 +205,10 @@ class MosesTokenizer(object):
         EN_SPECIFIC_5,
     ]
 
-    FR_IT_SPECIFIC_1 = r"([^{alpha}])[']([^{alpha}])".format(alpha=IsAlpha), r"\1 ' \2"
-    FR_IT_SPECIFIC_2 = r"([^{alpha}])[']([{alpha}])".format(alpha=IsAlpha), r"\1 ' \2"
-    FR_IT_SPECIFIC_3 = r"([{alpha}])[']([^{alpha}])".format(alpha=IsAlpha), r"\1 ' \2"
-    FR_IT_SPECIFIC_4 = r"([{alpha}])[']([{alpha}])".format(alpha=IsAlpha), r"\1' \2"
+    FR_IT_SPECIFIC_1 = r"([^{alpha}])(['’])([^{alpha}])".format(alpha=IsAlpha), r"\1 \2 \3"
+    FR_IT_SPECIFIC_2 = r"([^{alpha}])(['’])([{alpha}])".format(alpha=IsAlpha), r"\1 \2 \3"
+    FR_IT_SPECIFIC_3 = r"([{alpha}])(['’])([^{alpha}])".format(alpha=IsAlpha), r"\1 \2 \3"
+    FR_IT_SPECIFIC_4 = r"([{alpha}])(['’])([{alpha}])".format(alpha=IsAlpha), r"\1\2 \2"
 
     FR_IT_SPECIFIC_APOSTROPHE = [
         FR_IT_SPECIFIC_1,
@@ -541,7 +541,7 @@ class MosesTokenizer(object):
         if self.lang == "en":
             for regexp, substitution in self.ENGLISH_SPECIFIC_APOSTROPHE:
                 text = re.sub(regexp, substitution, text)
-        elif self.lang in ["fr", "it"]:
+        elif self.lang in ["fr", "it", "ca"]:
             for regexp, substitution in self.FR_IT_SPECIFIC_APOSTROPHE:
                 text = re.sub(regexp, substitution, text)
         # FIXME!!!
@@ -783,7 +783,7 @@ class MosesDetokenizer(object):
                 prepend_space = " "
 
             elif (
-                self.lang in ["fr", "it", "ga"]
+                self.lang in ["fr", "it", "ga", "ca"]
                 and i <= len(tokens) - 2
                 and re.search(r"[{}][']$".format(self.IsAlpha), token)
                 and re.search(r"^[{}]".format(self.IsAlpha), tokens[i + 1])
