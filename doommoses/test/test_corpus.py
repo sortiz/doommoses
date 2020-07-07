@@ -10,7 +10,7 @@ import unittest
 
 from six import text_type
 
-from sacremoses import corpus
+from doommoses import corpus
 
 
 class CorpusTest(unittest.TestCase):

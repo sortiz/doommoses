@@ -10,7 +10,7 @@ import unittest
 
 from six import text_type
 
-from sacremoses.normalize import MosesPunctNormalizer
+from doommoses.normalize import MosesPunctNormalizer
 
 
 class TestNormalizer(unittest.TestCase):

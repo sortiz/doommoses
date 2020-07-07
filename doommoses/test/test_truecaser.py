@@ -10,7 +10,7 @@ import unittest
 
 from six import text_type
 
-from sacremoses.truecase import MosesTruecaser, MosesDetruecaser
+from doommoses.truecase import MosesTruecaser, MosesDetruecaser
 
 
 # Crazy hack to support Python2 and 3 and requests to download files.

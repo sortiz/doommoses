@@ -10,7 +10,7 @@ setup(
   name = 'doommoses',
   packages = ['doommoses'],
   version = '0.0.43',
-  description = 'SacreMoses',
+  description = 'DoomMoses',
   long_description = 'MosesTokenizer in Python',
   author = '',
   package_data={'doommoses': ['data/perluniprops/*.txt', 'data/nonbreaking_prefixes/nonbreaking_prefix.*']},

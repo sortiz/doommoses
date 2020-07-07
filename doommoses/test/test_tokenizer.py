@@ -6,7 +6,7 @@ Tests for MosesTokenizer
 
 import unittest
 
-from sacremoses.tokenize import MosesTokenizer, MosesDetokenizer
+from doommoses.tokenize import MosesTokenizer, MosesDetokenizer
 
 
 class TestTokenzier(unittest.TestCase):
