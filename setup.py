@@ -9,7 +9,7 @@ doommoses=doommoses.cli:cli
 setup(
   name = 'doommoses',
   packages = ['doommoses'],
-  version = '0.0.43',
+  version = '0.0.44',
   description = 'DoomMoses',
   long_description = 'MosesTokenizer in Python',
   author = '',

@@ -5,4 +5,4 @@ from doommoses.normalize import *
 
 # from doommoses.subwords import *
 
-__version__ = "0.0.41"
+__version__ = "0.0.44"
