@@ -172,6 +172,12 @@ class MosesTokenizer(object):
     CONTRACTIONALT_18 = r" ’([Tt])was ", r" _APOS_ALT_\1was "
     CONTRACTIONALT_19 = r" ([Ww])anna ", r" \1anna "
 
+    # Hyphens at the boundaries
+    BOUNDARIES_1 = r"(\w)-(\W)",  r"\1 - \2"
+    BOUNDARIES_2 = r"^-(\w)",  r"- \1"
+    BOUNDARIES_3 = r"(\w)-$", r"\1 -"
+    BOUNDARIES_4 = r"(\W)-(\w)", r"\1 - \2"
+
 
     # Clean out extra spaces
     CLEAN_EXTRA_SPACE_1 = r"  *", r" "
@@ -485,7 +491,8 @@ class MosesTokenizer(object):
         # Converts input string into unicode.
         text = text_type(text)
         # De-duplicate spaces and clean ASCII junk
-        for regexp, substitution in [self.DEDUPLICATE_SPACE, self.ASCII_JUNK]:
+        for regexp, substitution in [self.DEDUPLICATE_SPACE, self.ASCII_JUNK, self.BOUNDARIES_1,
+                                     self.BOUNDARIES_2, self.BOUNDARIES_3, self.BOUNDARIES_4]:
             text = re.sub(regexp, substitution, text)
 
         if protected_patterns:
@@ -497,15 +504,15 @@ class MosesTokenizer(object):
             ]
             # Apply the protected_patterns.
             for i, token in enumerate(protected_tokens):
-                substituition = "THISISPROTECTED" + str(i).zfill(3)
-                text = text.replace(token, substituition)
+                substitution = "THISISPROTECTED" + str(i).zfill(3)
+                text = text.replace(token, substitution)
 
         # Strips heading and trailing spaces.
         text = text.strip()
 
         # FIXME!!!
         '''
-        # For Finnish and Swedish, seperate out all "other" special characters.
+        # For Finnish and Swedish, separate out all "other" special characters.
         if self.lang in ["fi", "sv"]:
             # In Finnish and Swedish, the colon can be used inside words
             # as an apostrophe-like character:
@@ -558,14 +565,14 @@ class MosesTokenizer(object):
         regexp, substitution = self.DEDUPLICATE_SPACE
         text = re.sub(regexp, substitution, text).strip()
         # Split trailing ".'".
-        regexp, substituition = self.TRAILING_DOT_APOSTROPHE
-        text = re.sub(regexp, substituition, text)
+        regexp, substitution = self.TRAILING_DOT_APOSTROPHE
+        text = re.sub(regexp, substitution, text)
 
         # Restore the protected tokens.
         if protected_patterns:
             for i, token in enumerate(protected_tokens):
-                substituition = "THISISPROTECTED" + str(i).zfill(3)
-                text = text.replace(substituition, token)
+                substitution = "THISISPROTECTED" + str(i).zfill(3)
+                text = text.replace(substitution, token)
 
         # Restore multidots.
         text = self.restore_multidots(text)

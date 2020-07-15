@@ -333,3 +333,29 @@ class TestDetokenizer(unittest.TestCase):
             u".",
         ]
         assert detokenizer.detokenize(tokenizer.tokenize(text)) == text
+
+    def test_hyphen_boundaries(self):
+        tokenizer = MosesTokenizer()
+
+        text = "-I'm tired."
+        tokens = tokenizer.tokenize(text)
+        assert tokens == [
+            "-",
+            "I&apos;m",
+            "tired",
+            "."
+        ]
+
+        text="non-breaking word"
+        tokens = tokenizer.tokenize(text)
+        assert tokens == ["non-breaking", "word"]
+
+
+        text="also-3 3-ventilators word"
+        tokens = tokenizer.tokenize(text)
+        assert tokens == ["also-3", "3-ventilator", "word"]
+
+        # Won't work
+        # detokenizer = MosesDetokenizer()
+        # textdetok = detokenizer.detokenize(tokens)
+        # assert textdetok == text
